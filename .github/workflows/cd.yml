@@ -79,6 +79,7 @@ jobs:
       with:
         step_name: "Build, tag, and push docker image to Amazon ECR"
         command: |
+          mkdir -p /tmp/.buildx-cache /tmp/.buildx-cache-new
           docker buildx build \
             --cache-from=type=local,src=/tmp/.buildx-cache \
             --cache-to=type=local,dest=/tmp/.buildx-cache-new,mode=max \
