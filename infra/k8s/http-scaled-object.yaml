@@ -1,0 +1,24 @@
+kind: HTTPScaledObject
+apiVersion: http.keda.sh/v1alpha1
+metadata:
+  name: lively-surbhi-e5cd2f5937-scaler
+  namespace: apps-release
+spec:
+  hosts:
+    - cc1fbde45ead-in-south-01.mayson.dev
+  pathPrefixes:
+    - /us-west-2-backstractelb-f07855-coll-c6e0059d1b4c4a238afe106971b65034/ # e.g. /infallible-naveen-... lively-surbhi-e5cd2f5937/
+  scaleTargetRef:
+    name: lively-surbhi-e5cd2f5937-depl
+    kind: Deployment
+    apiVersion: apps/v1
+    service: lively-surbhi-e5cd2f5937-srv # e.g. coll-8a2a...-srv
+    port: 80
+  replicas:
+    min: 0
+    max: 10
+  scaledownPeriod: 120 #inseconds
+  scalingMetric:
+    requestRate:
+      targetValue: 100
+      window: 1m
